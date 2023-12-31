@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello MovieController!
+{% endblock %}
+
+{% block body %}
+  <div class="row text-center">
+    {% for movie in movies %}
+      {% include '_partials/movie/_movie_block.html.twig' %}
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<div class="container">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"><img src="{{ asset('build/images/logo_moviz.png') }}" alt="logo moviz" height="30" /></a>
+    </div>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li>
+        <a href="{{ path('app_home') }}" class="nav-link px-2 link-secondary">Accueil</a>
+      </li>
+      <li>
+        <a href="{{ path('app_movies') }}" class="nav-link px-2">Les films</a>
+      </li>
+    </ul>
+
+    <div class="col-md-3 text-end">
+      <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Connexion</a>
+      <a href="{{ path('app_logout') }}" class="btn btn-primary">Déconnexion</a>
+    </div>
+  </header>
+</div>

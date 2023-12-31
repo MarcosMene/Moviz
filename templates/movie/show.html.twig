@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ movie.name }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ movie.name }}</h1>
+
+  <div class="row border-bottom mb-2 pb-2">
+    <div class="col">
+      Date de sortie:{% if movie.releaseDate %}
+        {{ movie.releaseDate.format('d/m/Y') }}
+      {% else %}
+        N/C
+      {% endif %}
+    </div>
+    <div class="col">
+      Durée:{% if movie.duration %}
+        {{ movie.duration.format('H') }}h {{ movie.duration.format('i') }}
+      {% else %}
+        N/C
+      {% endif %}
+    </div>
+    <div class="col">
+      {% for genre in movie.genres %}
+        <a href="{{ path('app_movies', { genreId: genre.id }) }}">{{ genre.name }}</a>
+      {% endfor %}
+    </div>
+    <div class="col">
+      {% for director in movie.directors %}
+        {{ director.firstName }}{{ director.lastName }}
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class="col">
+        {% if averageRate %}
+          <div class="row align-items-center">
+            <div>Note moyenne:</div>
+            <div class="rate col-6">
+              {% for i in range(5, 1, - 1) %}
+                <input disabled="disabled" type="radio" id="avgstar{{ i }}" name="avgrate" value="{{ i }}" {{ averageRate == i ? 'checked="checked"' : '' }} />
+                <label for="avgstar{{ i }}" title="{{ i }} étoiles">
+                  {{ i }}
+                  étoiles
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          Il n'y a pas encore de note
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row flex-lg-row-reverse g-5">
+    <div class="col-10 col-sm-8 col-lg-4">
+      {% if movie.imageName %}
+        <img src="{{ vich_uploader_asset(movie, 'imageFile') }}" class="card-img-top" alt="affiche {{ movie.name }}" />
+      {% else %}
+        <img src="{{ asset('build/images/no_image.png') }}" class="card-img-top" alt="affiche {{ movie.name }}" />
+      {% endif %}
+    </div>
+    <div class="col-lg-8">
+      <p class="lead">{{ movie.synopsis|raw }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h2>Noter ce film</h2>
+    {% if user %}
+      {{ include('_partials/review/_form.html.twig') }}
+    {% else %}
+      <p>
+        Vous devez être connecté pour pouvoir noter ce film. Rendez-vous sur la page <a href="{{ path('app_login') }}">Connexion</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}
